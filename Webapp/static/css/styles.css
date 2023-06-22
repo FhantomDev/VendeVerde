@@ -1,0 +1,188 @@
+/*Menu*/
+.barra {
+  background-color: #689F38;
+  font-size: 18px;
+  color: white;
+}
+
+.barra .nav-link {
+  color: white;
+  padding: 5px;
+}
+
+.barra .activo {
+  color: white;
+  font-weight: bold;
+  background-color: #8BC34A;
+  border-radius: 10px;
+
+}
+
+@media screen and (max-width: 767px) {
+  .navbar-brand {
+    display: none;
+  }
+}
+
+/* Boton iniciar */
+@media screen and (max-width: 768px) {
+  .div-iniciar {
+    position: absolute;
+    top: 10px;
+    right: 60px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .div-iniciar {
+    position: absolute;
+    top: 10px;
+    right: 120px;
+  }
+}
+
+.div2-iniciar {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.a {
+  text-decoration: none;
+}
+
+/* Principal */
+.principal {
+  background-color: white;
+  color: black;
+  text-align: center;
+  font-size: 18px;
+}
+
+.productos p {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.productos h4 {
+  text-align: center;
+}
+
+/* Seccion index */
+.ofertas {
+  background-color: #DCEDC8;
+  font-size: 22px;
+  font-weight: bold;
+  padding-top: 20px;
+  padding-bottom: 8px;
+}
+
+.mas-vendidos {
+  background-color: #DCEDC8;
+  font-size: 22px;
+  font-weight: bold;
+  padding-top: 20px;
+  padding-bottom: 8px;
+}
+
+.ultimas {
+  background-color: #DCEDC8;
+  font-size: 22px;
+  font-weight: bold;
+  padding-top: 20px;
+  padding-bottom: 8px;
+}
+
+.link-img:hover img {
+  transform: scale(1.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Imagenes principales */
+@media screen and (max-width: 768px) {
+  .img-principal {
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .img-principal {
+    width: 100%;
+  }
+}
+
+/* Registro */
+.div-registro {
+  background-color: rgba(255, 228, 196, 0.267);
+
+}
+
+.div-registro label {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Nosotros */
+.nosotros {
+  background-color: rgba(255, 228, 196, 0.267);
+  font-size: 18px;
+  text-align: justify;
+}
+
+/* Ficha planta*/
+.ficha {
+  background-color: rgba(0, 255, 255, 0.112);
+  font-size: 18px;
+  border: 10px solid rgba(0, 0, 0, 0.174);
+
+}
+
+.ficha p {
+  font-size: 18px;
+}
+
+h4 {
+  background-color: #DCEDC8;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+/* Pagina Contacto */
+.contacto p {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.contacto textarea {
+  background-color: rgba(0, 255, 255, 0.144);
+  border-color: black;
+  height: 250px;
+}
+
+.contacto input {
+  background-color: rgba(0, 255, 255, 0.144);
+  border-color: black;
+}
+
+/* Pie de pagina */
+.pie {
+  height: 150px;
+  background-color: #DCEDC8;
+  color: black;
+  font-size: 18px;
+}
+
+/* Clima */
+.clima {
+  font-size: 15px;
+  color: rgb(63, 63, 63);
+  font-weight: bold;
+  background-color: rgb(187, 223, 254);
+}
+
+.carrito {
+  position: absolute;
+  top: 10px;
+  right: 245px;
+}

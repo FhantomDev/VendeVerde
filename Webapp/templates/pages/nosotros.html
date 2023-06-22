@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VendeVerde</title>
+  {% load static %}
+  <link rel="icon" type="image/png" href="{% static 'img/icon.png' %}">
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+<body>
+  <!--Menu-->
+  <nav class="barra navbar navbar-expand-md">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarmenu"
+        aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarmenu">
+        <a class="navbar-brand" href="#">
+          <img src="{% static 'img/icon.png' %}" width="50px">
+        </a>
+        <ul class="navbar-nav d-flex justify-content-center align-items-center">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href={% url 'index' %}>Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'productos' %}">Productos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'contacto' %}">Contacto</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link activo" href="{% url 'nosotros' %}">Sobre Nosotros</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!--Boton iniciar-->
+    <div class="div-iniciar">
+      <button class="btn-iniciar btn btn-primary d-none d-md-block" type="button" data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Iniciar sesión
+      </button>
+      <button type="button" class="btn btn-primary d-block d-md-none" data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
+        <i class="bi bi-person-fill-up"></i>
+      </button>
+    </div>
+    <div class="div2-iniciar">
+      <a href="{% url 'registro' %}">
+        <button type="button" class="btn btn-primary d-none d-md-block">Registrarse</button>
+        <button type="button" class="btn btn-primary d-block d-md-none">
+          <i class="bi bi-person-fill-add"></i>
+        </button>
+      </a>
+    </div>
+  </nav>
+
+  <!--Inicio de sesión-->
+  <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"
+    aria-labelledby="offcanvasWithBothOptionsLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Inicio de sesión</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body bg-info">
+      <!-- Formulario de inicio de sesion -->
+      <form novalidate action="#" method="post" name="login" id="login">
+        <div class="mb-4">
+          <label for="email" class="form-label">E-mail</label>
+          <input type="email" class="form-control" name="email" id="email-login">
+        </div>
+        <div class="mb-4">
+          <label for="password" class="form-label">Contraseña</label>
+          <input type="password" class="form-control" name="password" id="password-login">
+        </div>
+        <div class="mb-4 form-check">
+          <input type="checkbox" name="conectado" class="form-check-input">
+          <label for="conectado" class="form-check-label">Mantener conectado</label>
+        </div>
+        <div class="d-grid mb-4">
+          <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+        </div>
+        <div class="col-12 d-flex justify-content-center align-items-center" id="alerta-login"></div>
+        <div class="mb-4 text-center">
+          <span><a href="{% url 'registro' %}">Registrar</a></span><br>
+          <span><a href="#">Recuperar contraseña</a></span>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Carrusel -->
+    <div class="d-flex justify-content-center bg-black">
+      <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="{% static 'img/carrusel1.png' %}" class="d-block w-75 mx-auto" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="{% static 'img/carrusel2.png' %}" class="d-block w-75 mx-auto" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="{% static 'img/carrusel3.png' %}" class="d-block w-75 mx-auto" alt="...">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
+          data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
+          data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+
+<!-- Principal fila-->
+<main>
+  <div class="container-fluid d-flex justify-content-center nosotros">
+    <div class="row my-5">
+      <div class="col-12 col-md-6 px-5 d-flex justify-content-center align-items-start">
+        <img src="{% static 'img/nosotros.jpg' %}" alt="Sobre nosotros" class="img-fluid">
+      </div>
+      <div class="col-12 col-md-6 px-5">
+        <p>¡Bienvenidos a Vendeverde!
+
+          En Vendeverde, estamos emocionados de presentarte nuestra iniciativa comunitaria que combina la pasión por
+          la jardinería con un propósito solidario. Nos enorgullece anunciar que todos nuestros productos y ganancias
+          están destinados a apoyar a la Fundación Infancia Segura, una organización sin fines de lucro que trabaja
+          incansablemente para asegurar un futuro seguro y brillante para los niños más vulnerables.
+          <br><br>
+          ¿Qué ofrecemos? ¡Todo lo que necesitas para convertir tu jardín en un oasis verde! Desde maceteros y tierra
+          de hojas hasta flores y arbustos exuberantes, encontrarás una amplia variedad de productos de jardinería de
+          alta calidad para embellecer tu espacio al aire libre. Nuestro objetivo es brindarte todo lo necesario para
+          que tus proyectos de jardinería se conviertan en un éxito, al tiempo que contribuyes a una causa digna.
+          <br><br>
+          ¿Cómo puedes participar? Es fácil. Explora nuestra página web y descubre una selección diversa de productos
+          para jardinería. Cada compra que realices será un paso más hacia la construcción de un futuro seguro para
+          los niños que más lo necesitan. Cada centavo de tus compras se destinará íntegramente a la Fundación
+          Infancia Segura, lo que significa que tu contribución tendrá un impacto real en la vida de los más pequeños.
+          <br><br>
+          ¿Por qué apoyamos a la Fundación Infancia Segura? Creemos firmemente en el poder transformador de la
+          educación y el cuidado infantil. La Fundación Infancia Segura se dedica a proporcionar un entorno seguro y
+          brindar oportunidades educativas a niños en situaciones de vulnerabilidad. Al unirnos a su causa, podemos
+          marcar la diferencia en la vida de muchos niños, ayudándolos a alcanzar su máximo potencial y asegurando que
+          tengan un futuro lleno de esperanza y oportunidades.
+          <br><br>
+          Te invitamos a unirte a nosotros en esta noble misión. Cada compra que realices en Vendeverde no solo te
+          permitirá disfrutar de productos de jardinería excepcionales, sino que también te convertirá en un agente de
+          cambio positivo. Juntos, podemos hacer una diferencia significativa en la vida de los niños y construir un
+          mundo más verde y seguro para las generaciones futuras.
+          <br><br>
+          ¡Gracias por elegir Vendeverde! Tu apoyo y contribución marcan la diferencia.
+          <br><br>
+          Equipo Vendeverde
+        </p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!--Pie de pagina-->
+<footer>
+  <div class="container-fluid d-flex justify-content-center " style="background-color: #DCEDC8;">
+    <div class="row w-75 pie">
+      <div class="col-6 col-md-3 d-flex justify-content-center align-items-center">
+        <a href="https://twitter.com/">
+          <button class="btn btn-outline-secondary">
+            <i class="bi bi-twitter"></i>
+          </button>
+        </a>
+      </div>
+      <div class="col-6 col-md-3 d-flex justify-content-center align-items-center">
+        <a href="https://instagram.com/">
+          <button class="btn btn-outline-secondary">
+            <i class="bi bi-instagram"></i>
+          </button>
+        </a>
+      </div>
+      <div class="col-6 col-md-3 d-flex justify-content-center align-items-center">
+        <a href="https://facebook.com/">
+          <button class="btn btn-outline-secondary">
+            <i class="bi bi-facebook"></i>
+          </button>
+        </a>
+      </div>
+      <div class="col-6 col-md-3 d-flex justify-content-center align-items-center">
+        <a href="https://tiktok.com/">
+          <button class="btn btn-outline-secondary">
+            <i class="bi bi-tiktok"></i>
+          </button>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+  <script src="{% static 'js/login.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+</body>
+</html>
