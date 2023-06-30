@@ -186,3 +186,34 @@ h4 {
   top: 10px;
   right: 245px;
 }
+
+.exito {
+  border: 2px solid green;
+  background-color: palegreen;
+  font-size: 30px;
+  font-weight: bold;
+  height: 100px;
+  width: 450px;
+
+}
+
+.error {
+  border: 2px solid red;
+  background-color: palevioletred;
+  font-size: 30px;
+  font-weight: bold;
+  height: 100px;
+  width: 450px;
+
+}
+
+
+.sesion-iniciada {
+  position: absolute;
+  top: 25px;
+  right: 60px;
+}
+
+.panel-control {
+  font-size: 20px;
+}

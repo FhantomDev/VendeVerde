@@ -33,125 +33,67 @@
             <a class="nav-link" href="{% url 'contacto' %}">Contacto</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link activo" href="{% url 'nosotros' %}">Sobre Nosotros</a>
+            <a class="nav-link" href="{% url 'nosotros' %}">Sobre Nosotros</a>
           </li>
         </ul>
       </div>
     </div>
-    <!--Boton iniciar-->
-    <div class="div-iniciar">
-      <button class="btn-iniciar btn btn-primary d-none d-md-block" type="button" data-bs-toggle="offcanvas"
-        data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Iniciar sesión
-      </button>
-      <button type="button" class="btn btn-primary d-block d-md-none" data-bs-toggle="offcanvas"
-        data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
-        <i class="bi bi-person-fill-up"></i>
-      </button>
-    </div>
-    <div class="div2-iniciar">
-      <a href="{% url 'registro' %}">
-        <button type="button" class="btn btn-primary d-none d-md-block">Registrarse</button>
-        <button type="button" class="btn btn-primary d-block d-md-none">
-          <i class="bi bi-person-fill-add"></i>
-        </button>
-      </a>
-    </div>
   </nav>
-
-  <!--Inicio de sesión-->
-  <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"
-    aria-labelledby="offcanvasWithBothOptionsLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Inicio de sesión</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body bg-info">
-      <!-- Formulario de inicio de sesion -->
-      <form novalidate action="#" method="post" name="login" id="login">
-        <div class="mb-4">
-          <label for="email" class="form-label">E-mail</label>
-          <input type="email" class="form-control" name="email" id="email-login">
-        </div>
-        <div class="mb-4">
-          <label for="password" class="form-label">Contraseña</label>
-          <input type="password" class="form-control" name="password" id="password-login">
-        </div>
-        <div class="mb-4 form-check">
-          <input type="checkbox" name="conectado" class="form-check-input">
-          <label for="conectado" class="form-check-label">Mantener conectado</label>
-        </div>
-        <div class="d-grid mb-4">
-          <button type="submit" class="btn btn-primary">Iniciar sesión</button>
-        </div>
-        <div class="col-12 d-flex justify-content-center align-items-center" id="alerta-login"></div>
-        <div class="mb-4 text-center">
-          <span><a href="{% url 'registro' %}">Registrar</a></span><br>
-          <span><a href="#">Recuperar contraseña</a></span>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Carrusel -->
-    <div class="d-flex justify-content-center bg-black">
-      <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img src="{% static 'img/carrusel1.png' %}" class="d-block w-75 mx-auto" alt="...">
-          </div>
-          <div class="carousel-item">
-            <img src="{% static 'img/carrusel2.png' %}" class="d-block w-75 mx-auto" alt="...">
-          </div>
-          <div class="carousel-item">
-            <img src="{% static 'img/carrusel3.png' %}" class="d-block w-75 mx-auto" alt="...">
-          </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
-          data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
-          data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
-    </div>
 
 <!-- Principal -->
 <main>
   <div class="container-fluid">
-    <div class="row">
-      <nav class="bg-info py-4">
-        <div class="col-12 col-md-12 nav nav-tabs bg-info" id="nav-tab" role="tablist">
-          <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
-            type="button" role="tab" aria-controls="nav-home" aria-selected="true">Cuenta</button>
-          <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
-            type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Perfil</button>
-          <button class="nav-link" id="nav-ventas-tab" data-bs-toggle="tab" data-bs-target="#nav-ventas" type="button"
-            role="tab" aria-controls="nav-ventas" aria-selected="false">Ventas</button>
-          <button class="nav-link" id="nav-inventario-tab" data-bs-toggle="tab" data-bs-target="#nav-inventario"
-            type="button" role="tab" aria-controls="nav-inventario" aria-selected="false">Inventario</button>
+    <div class="row d-flex justify-content-center">
+        <nav class="bg-info p-5">
+          <div class="col-12 col-md-12 nav nav-tabs bg-info" id="nav-tab" role="tablist">
+            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Cuenta</button>
+            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Ver usuarios</button>
+          </div>
+        </nav>
+        {% if empleado %}
+        {% endif %}
+        {% if cliente %}
+        {% endif %}
+        <div class="col-12 col-md-12 bg-info-subtle p-5 tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+            <div class="panel-control">
+              <h2>Hola {{empleado.nombreEmpleado}} {{empleado.apPaternoEmpleado}} {{empleado.apMaternoEmpleado}}</h2>
+              <br>
+              <h2>Eres {{empleado.tipoUsuario}} </h2>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+            <h2>Lista de Usuarios</h2>
+            <table class="table table-light table-striped mt-3">
+              <thead>
+                <th>Rut</th>
+                <th>Nombre</th>
+                <th>Apellido paterno</th>
+                <th>Apellido materno</th>
+                <th>Correo</th>
+                <th>Modificar</th>
+                <th>Eliminar</th>
+              </thead>
+              <tbody>
+                {% for cli in cliente %}
+                <tr>
+                  <td>{{cli.runCliente}}</td>
+                  <td>{{cli.nombreCliente}}</td>
+                  <td>{{cli.apPaternoCliente}}</td>
+                  <td>{{cli.apMaternoCliente}}</td>
+                  <td>{{cli.correoCliente}}</td>
+                  <td>boton</td>
+                  <td><a href="{% url 'eliminarCliente' pk=cli.runCliente%}">Eliminar</a></td>
+                </tr> 
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+            <h2>Pedidos</h2>
+          </div>
+          <div class="tab-pane fade" id="nav-disabled" role="tabpanel" aria-labelledby="nav-disabled-tab" tabindex="0">...</div>
         </div>
-      </nav>
-
-      <div class="col-12 col-md-12 bg-info-subtle py-4 tab-content" id="nav-tabContent">
-        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"
-          tabindex="0">
-          <h2>Hola Admin</h2>
-        </div>
-        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
-          <h2>Editar perfil</h2>
-        </div>
-        <div class="tab-pane fade" id="nav-ventas" role="tabpanel" aria-labelledby="nav-ventas-tab" tabindex="0">
-          <h2>Ventas</h2>
-        </div>
-        <div class="tab-pane fade" id="nav-inventario" role="tabpanel" aria-labelledby="nav-inventario-tab"
-          tabindex="0">
-          <h2>Inventario</h2>
-        </div>
-      </div>
     </div>
   </div>
 </main>

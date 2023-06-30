@@ -4,12 +4,11 @@ var rut = document.getElementById("rut");
 var email = document.getElementById("email");
 var pass = document.getElementById("password");
 var nombre = document.getElementById("nombre");
-var apellidos = document.getElementById("apellidos");
+var apPaterno = document.getElementById("apPaterno");
+var apMaterno = document.getElementById("apMaterno");
 var direccion = document.getElementById("direccion");
 var telefono = document.getElementById("telefono");
 var comuna = document.getElementById("comunas");
-var provincia = document.getElementById("provincias");
-var region = document.getElementById("regiones");
 
 var formRegistro = document.getElementById("form-registro");
 var alerta = document.getElementById("alerta");
@@ -68,11 +67,17 @@ formRegistro.addEventListener("submit", function (evento) {
   } else {
     nombre.style.border = "2px solid green";
   }
-  if (!validarApellidos.test(apellidos.value)) {
+  if (!validarApellidos.test(apPaterno.value)) {
     validarForm = false;
-    apellidos.style.border = "2px solid red";
+    apPaterno.style.border = "2px solid red";
   } else {
-    apellidos.style.border = "2px solid green";
+    apPaterno.style.border = "2px solid green";
+  }
+  if (!validarApellidos.test(apMaterno.value)) {
+    validarForm = false;
+    apMaterno.style.border = "2px solid red";
+  } else {
+    apMaterno.style.border = "2px solid green";
   }
   if (!validarDireccion.test(direccion.value)) {
     validarForm = false;
@@ -92,18 +97,6 @@ formRegistro.addEventListener("submit", function (evento) {
   } else {
     comuna.style.border = "2px solid green";
   }
-  if (provincia.options[provincia.selectedIndex].text === "Seleccione una opción") {
-    validarForm = false;
-    provincia.style.border = "2px solid red";
-  } else {
-    provincia.style.border = "2px solid green";
-  }
-  if (region.options[region.selectedIndex].text === "Seleccione una opción") {
-    validarForm = false;
-    region.style.border = "2px solid red";
-  } else {
-    region.style.border = "2px solid green";
-  }
 
   if (validarForm == false) {
     evento.preventDefault();
@@ -117,14 +110,11 @@ formRegistro.addEventListener("submit", function (evento) {
     console.log(Fn.validaRut(rut.value));
 
   } else {
-    evento.preventDefault();
-    alerta.innerText = "Exito ";
-    alerta.style.border = "2px solid green";
-    alerta.style.backgroundColor = "palegreen";
-    alerta.style.fontSize = "20px";
-    alerta.style.fontWeight = "bold";
-    alerta.style.textAlign = "center";
-    alerta.style.height = "50px"
-    alerta.style.lineHeight = "50px";
+    var formData = new FormData(formRegistro);
+    fetch('/registro/', {
+      method: 'POST',
+      body: formData
+    })
+
   }
 })

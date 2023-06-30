@@ -38,112 +38,13 @@
         </ul>
       </div>
     </div>
-    <!--Boton iniciar-->
-    <div class="div-iniciar">
-      <button class="btn-iniciar btn btn-primary d-none d-md-block" type="button" data-bs-toggle="offcanvas"
-        data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Iniciar sesión
-      </button>
-      <button type="button" class="btn btn-primary d-block d-md-none" data-bs-toggle="offcanvas"
-        data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
-        <i class="bi bi-person-fill-up"></i>
-      </button>
-    </div>
-    <div class="div2-iniciar">
-      <a href="{% url 'registro' %}">
-        <button type="button" class="btn btn-primary d-none d-md-block">Registrarse</button>
-        <button type="button" class="btn btn-primary d-block d-md-none">
-          <i class="bi bi-person-fill-add"></i>
-        </button>
-      </a>
-    </div>
-        <!-- Boton carrito -->
-    <div class="carrito">
-      <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#carrito"
-        aria-controls="offcanvasRight"><i class="bi bi-cart4"></i></button>
-    </div>
   </nav>
-
-  <!--Inicio de sesión-->
-  <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"
-    aria-labelledby="offcanvasWithBothOptionsLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Inicio de sesión</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body bg-info">
-      <!-- Formulario de inicio de sesion -->
-      <form novalidate action="#" method="post" name="login" id="login">
-        <div class="mb-4">
-          <label for="email" class="form-label">E-mail</label>
-          <input type="email" class="form-control" name="email" id="email-login">
-        </div>
-        <div class="mb-4">
-          <label for="password" class="form-label">Contraseña</label>
-          <input type="password" class="form-control" name="password" id="password-login">
-        </div>
-        <div class="mb-4 form-check">
-          <input type="checkbox" name="conectado" class="form-check-input">
-          <label for="conectado" class="form-check-label">Mantener conectado</label>
-        </div>
-        <div class="d-grid mb-4">
-          <button type="submit" class="btn btn-primary">Iniciar sesión</button>
-        </div>
-        <div class="col-12 d-flex justify-content-center align-items-center" id="alerta-login"></div>
-        <div class="mb-4 text-center">
-          <span><a href="{% url 'registro' %}">Registrar</a></span><br>
-          <span><a href="#">Recuperar contraseña</a></span>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Carrusel -->
-    <div class="d-flex justify-content-center bg-black">
-      <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img src="{% static 'img/carrusel1.png' %}" class="d-block w-75 mx-auto" alt="...">
-          </div>
-          <div class="carousel-item">
-            <img src="{% static 'img/carrusel2.png' %}" class="d-block w-75 mx-auto" alt="...">
-          </div>
-          <div class="carousel-item">
-            <img src="{% static 'img/carrusel3.png' %}" class="d-block w-75 mx-auto" alt="...">
-          </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
-          data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
-          data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
-    </div>
 
 <!-- Principal fila-->
 <main>
   <div class="container-fluid">
     <div class="row productos">
       <h4>Plantas</h4>
-      <!-- Carro -->
-      <div class="offcanvas offcanvas-end" tabindex="-1" id="carrito" aria-labelledby="offcanvasRightLabel">
-        <div class="offcanvas-header">
-          <h3 class="offcanvas-title" id="offcanvasRightLabel">Carro de compras</h3>
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-          <div id="carro">
-            <ul id="carro-items">
-            </ul>
-            <p>Total: <span id="carro-total">$0</span></p>
-            <button class="btn btn-primary" id="btn-comprar">Comprar</button>
-          </div>
-        </div>
-      </div>
       <!-- Productos -->
       <div id="productos" class="col-12 col-md-4 my-5 d-flex justify-content-center align-items-center flex-column">
         <img src="{% static 'img/Calathea_Mokoyana.webp' %}" class="img-fluid px-2 px-md-5 mb-4">

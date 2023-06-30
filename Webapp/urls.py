@@ -12,5 +12,11 @@ urlpatterns = [
     path("flores", views.flores, name="flores"),
     path("usuario", views.usuario, name="usuario"),
     path("admin", views.admin, name="admin"),
-
-]
+    path("exito", views.exito, name="exito"),
+    path("error", views.error, name="error"),
+    path("loginCliente", views.loginCliente, name="loginCliente"),
+    path("updateCliente", views.updateCliente, name="updateCliente"),
+    path("salir", views.salir, name="salir"),
+    path("eliminarCliente/ <str:pk>", views.eliminarCliente, name="eliminarCliente"),
+    path("suscripcionCliente", views.suscripcionCliente, name="suscripcionCliente"),
+]   
