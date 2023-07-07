@@ -71,22 +71,49 @@
           <div class="p-3">
             <a class="btn btn-danger" href="{% url 'salir' %}">Cerrar sesión</a>
           </div>
-          <div class="text-center p-3 bg-warning">
-            Suscribete y ayude con una donación a la fundación infancia segura y obtenga descuentos en sus compras
-          </div>
-          <form action="suscripcionCliente" method="POST" name="formSus">
-            {% csrf_token %}
-            <div class="m-3">
-              <select name="suscripcion" class="form-select">
-                <option value="" disable>Seleccione una opción</option>
-                <option value="3000">Mensual 3.000</option>
-                <option value="30000">Anual 30.000</option>
-              </select>
-            </div>
-            <div>
-              <button type="submit" class="btn btn-primary" id="btnSus">Suscribirse</button>
-            </div>
-          </form>
+          <hr>
+          <div>
+            <table>
+              <thead>
+                  <tr>
+                      <th scope="row" colspan="3" class="text-center">Carro <i class="bi bi-cart4"></i></th>
+                  </tr>
+                  <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Quitar</th>
+                  </tr>
+              </thead>
+              <form action="comprar" method="POST">
+                {% csrf_token %}
+                {% if request.session.carrito.items %}
+                  <tbody>
+                  {% for key, value in request.session.carrito.items %}
+                    <tr>
+                      <input type="hidden" name="idProducto" value="{{ value.producto_id }}">
+                      <td>{{ value.nombre }}</td>
+                      <td><input type="hidden" name="cantidadProducto" value="{{ value.cantidad }}">{{ value.cantidad }}</td>
+                      <td>${{ value.acumulado }}</td>
+                      <td class="text-center"><a href="{% url 'restarProducto' value.producto_id %}"><i class="bi bi-dash-square"></i></a></td>
+                    </tr> 
+                  {% endfor %}
+                  </tbody>
+                {% else %}
+                  <tr>
+                    <td colspan="3">
+                      <div class="alert alert-danger text-center">Sin Productos</div>
+                    </td>
+                  </tr>
+                {% endif %}
+                <tr>
+                  <th scope="row">Total:</th>
+                  <td><input type="hidden" name="totalPedido" value="{{ total }}">{{ total }}</td>
+                  <td><button type="submit" class="btn btn-primary">Comprar</button></td>
+                </tr>    
+              </form>
+          </table>
+          </div>      
           
           {% elif request.session.runEmpleado%}
           <div class="p-3 text-center">
@@ -108,6 +135,25 @@
           {% endif %}
         </div>
         <div class="col-9 col-md-9 p-4">
+          {% if suscripcion %}
+          <div class="text-center p-3 bg-warning w-75 mx-auto">
+            Suscripción activa: ¡Estás suscrito!
+          </div>
+          {% else %}
+          <div class="text-center p-3 bg-warning w-75 mx-auto">
+            Suscribete y ayude con una donación a la fundación infancia segura y obtenga descuentos en sus compras
+              <form action="suscripcionCliente" method="POST" name="formSus" class="w-50 mx-auto m-3">
+                {% csrf_token %}
+                  <select name="suscripcion" class="form-select">
+                    <option value="" disable>Seleccione una opción</option>
+                    <option value="3000">Mensual 3.000</option>
+                    <option value="30000">Anual 30.000</option>
+                  </select>
+                <button type="submit" class="btn btn-primary mt-3" id="btnSus">Suscribirse</button>
+              </form>
+          </div>
+          {% endif %}
+
           <img src="{% static 'img/carrusel1.png' %}" class="d-block w-75 mx-auto" alt="...">
           <img src="{% static 'img/carrusel2.png' %}" class="d-block w-75 mx-auto" alt="...">
           <img src="{% static 'img/carrusel3.png' %}" class="d-block w-75 mx-auto" alt="...">
@@ -152,6 +198,7 @@
     </div>
   </footer>
   <script src="{% static 'js/api_clima.js' %}"></script>
+  <script src="{% static 'js/carro.js' %}"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </body>
 </html>

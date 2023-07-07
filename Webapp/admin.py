@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import cliente, tipoUsuario, comuna, provincia, region, empleado, pedido, despacho, producto, detallePedido, promocion, suscripcion
+from .models import cliente, tipoUsuario, comuna, provincia, region, empleado, pedido, despacho, producto, detallePedido, promocion, suscripcion, estado_despacho
 # Register your models here.
 
 admin.site.register(cliente) 
@@ -14,3 +14,4 @@ admin.site.register(producto)
 admin.site.register(detallePedido)
 admin.site.register(promocion)
 admin.site.register(suscripcion)
+admin.site.register(estado_despacho)

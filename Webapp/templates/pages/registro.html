@@ -80,11 +80,10 @@
       </div>
       <div class="col-12 col-md-6 mb-4">
         <label for="comunas" class="form-label">Comuna</label>
-        <select name="comunas" class="form-select" id="comunas">
-          <option value="" disable>Seleccione una opción</option>
-          <option value="1" name="1">Santiago</option>
-          <option value="2" name="2">Providencia</option>
-          <option value="3" name="3">Estación Central</option>
+        <select name="comunas" class="form-control" id="comunas">
+          {% for com in comuna %}
+            <option value="{{com.idComuna}}">{{com.nombre_comuna}}</option>
+          {% endfor %}
         </select>
       </div>
       <div class="col-12 d-flex justify-content-center align-items-center" name="alerta" id="alerta"></div>

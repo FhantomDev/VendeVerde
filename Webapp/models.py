@@ -72,20 +72,27 @@ class empleado(models.Model):
 class pedido(models.Model):
     idPedido = models.AutoField(primary_key=True)
     fechaPedido = models.DateField(blank=False, null=False)
-    descuento_pedido = models.IntegerField()
-    total_pedido = models.IntegerField()
+    descuentoPedido = models.IntegerField()
+    totalPedido = models.IntegerField()
     cliente = models.ForeignKey("cliente", on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.idPedido)+" "+str(self.cliente)
-    
+
+
+class estado_despacho(models.Model):
+    idEstado = models.AutoField(primary_key=True)
+    nombreEstado = models.CharField(max_length=20, blank=False, null=False)
+    def __str__(self):
+        return str(self.nombreEstado)
+
 
 class despacho(models.Model):
     idDespacho = models.AutoField(primary_key=True)
     fechaDespacho = models.DateField(blank=False, null=False)
-    estadoDespacho = models.CharField(max_length=20, blank=False, null=False)
-    fechaRecibido = models.DateField(blank=False, null=False)
+    fechaEntrega = models.DateField(blank=False, null=False)
     pedido = models.ForeignKey("pedido", on_delete=models.CASCADE)
+    estado = models.ForeignKey("estado_despacho", on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.idDespacho)+" "+str(self.fechaDespacho)

@@ -105,9 +105,14 @@
               </div>
               <div class="col-12 col-md-6 mb-4">
                 <label for="comunas" class="form-label">Comuna</label>
-                <select name="comunas" class="form-select" id="comunas">
-                  <option value="" disable>Seleccione una opción</option>
-                  <option value="1" name="1">Providencia</option>
+                <select name="comunas" class="form-control" id="comunas">
+                  {% for com in comuna %}
+                    {% if cliente.comuna.idComuna == com.idComuna %}
+                    <option value="{{com.idComuna}}" selected>{{com.nombre_comuna}}</option>
+                    {% else %}
+                    <option value="{{com.idComuna}}">{{com.nombre_comuna}}</option>
+                    {% endif %}
+                  {% endfor %}
                 </select>
               </div>
               <div class="col-12 d-flex justify-content-center align-items-center" name="alerta" id="alerta"></div>
@@ -120,20 +125,24 @@
             <h2>Pedidos</h2>
             <table class="table table-light table-striped mt-3">
               <thead>
+                <th>ID pedido</th>
                 <th>Fecha</th>
-                <th>Descuento</th>
                 <th>Total pedido</th>
                 <th>Estado</th>
               </thead>
               <tbody>
                 {% for ped in pedido %}
-                <tr>
-                  <td>{{ped.fechaPedido}}</td>
-                  <td>{{ped.descuento_pedido}}</td>
-                  <td>{{ped.total_pedido}}</td>
-                  <td>+++++</td>
-                </tr> 
+                {% for des in despacho %}
+                  {% if ped.idPedido == des.pedido.idPedido %}
+                    <tr>
+                      <td>{{ ped.idPedido }}</td>
+                      <td>{{ ped.fechaPedido }}</td>
+                      <td>${{ ped.totalPedido }}</td>
+                      <td>{{ des.estado }}</td>
+                    </tr>
+                  {% endif %}
                 {% endfor %}
+              {% endfor %}              
               </tbody>
             </table>
           </div>

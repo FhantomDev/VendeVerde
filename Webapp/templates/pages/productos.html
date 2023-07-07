@@ -43,30 +43,140 @@
 <!-- Principal fila-->
 <main>
   <div class="container-fluid">
-    <div class="row productos">
-      <h4>Productos</h4>
-      <div class="col-12 col-md-4 my-5 d-flex justify-content-center align-items-center flex-column">
-        <a href="{% url 'plantas' %}" class="d-flex justify-content-center">
-          <img src="{% static 'img/plantas.webp' %}" class="img-principal img-fluid px-2 px-md-5 mb-4">
-        </a>
-        <p>Plantas</p>
+    <div class="row d-flex">
+      <div class="bg-info col-3 col-md-3 d-flex justify-content-star align-items-center flex-column">
+        {% if request.session.runCliente %}
+        <div class="p-3 text-center">
+          <h3>Bienvenido, {{  request.session.runCliente }}</h3>
+        </div>
+        <div class="p-3">
+          <a class="btn btn-primary" href="{% url 'usuario' %}">Panel de control</a>
+        </div>
+        <div class="p-3">
+          <a class="btn btn-danger" href="{% url 'salir' %}">Cerrar sesión</a>
+        </div>
+        <hr>
+        <div>
+          <table>
+            <thead>
+                <tr>
+                    <th scope="row" colspan="3" class="text-center">Carro <i class="bi bi-cart4"></i></th>
+                </tr>
+                <tr>
+                  <th>Producto</th>
+                  <th>Cantidad</th>
+                  <th>Precio</th>
+                  <th>Quitar</th>
+                </tr>
+            </thead>
+            <form action="comprar" method="POST">
+              {% csrf_token %}
+              {% if request.session.carrito.items %}
+                <tbody>
+                {% for key, value in request.session.carrito.items %}
+                  <tr>
+                    <input type="hidden" name="idProducto" value="{{ value.producto_id }}">
+                    <td>{{ value.nombre }}</td>
+                    <td><input type="hidden" name="cantidadProducto" value="{{ value.cantidad }}">{{ value.cantidad }}</td>
+                    <td>${{ value.acumulado }}</td>
+                    <td class="text-center"><a href="{% url 'restarProducto' value.producto_id %}"><i class="bi bi-dash-square"></i></a></td>
+                  </tr> 
+                {% endfor %}
+                </tbody>
+              {% else %}
+                <tr>
+                  <td colspan="3">
+                    <div class="alert alert-danger text-center">Sin Productos</div>
+                  </td>
+                </tr>
+              {% endif %}
+              <tr>
+                <th scope="row">Total:</th>
+                <td><input type="hidden" name="totalPedido" value="{{ total }}">{{ total }}</td>
+                <td><button type="submit" class="btn btn-primary">Comprar</button></td>
+              </tr>    
+            </form>
+            
+        </table>
+        </div>
+        
+        {% elif request.session.runEmpleado%}
+        <div class="p-3 text-center">
+          <h3>Bienvenido, Administrador</h3>
+        </div>
+        <div class="p-3">
+          <a class="btn btn-primary" href="{% url 'admin' %}">Panel de control</a>
+        </div>
+        <div class="">
+          <a class="btn btn-danger" href="{% url 'salir' %}">Cerrar sesión</a>
+        </div>
+        {% else %}
+        <div class="p-3">
+          <a class="btn btn-primary" href="{% url 'loginCliente' %}">Iniciar sesión</a>
+        </div>
+        <div class="p-3">
+          <a class="btn btn-primary" href="{% url 'registro' %}">Registrarse</a>
+        </div>
+        {% endif %}
       </div>
-      <div class="col-12 col-md-4 mb-5 d-flex justify-content-end align-items-center flex-column">
-        <a href="{% url 'flores' %}" class="d-flex justify-content-center">
-          <img src="{% static 'img/flores.jpg' %}" class="img-principal img-fluid px-2 px-md-5 mb-4">
-        </a>
-        <p>Flores</p>
-      </div>
-      <div class="col-12 col-md-4 mb-5 d-flex justify-content-end align-items-center flex-column">
-        <a href="{% url 'macetas' %}" class="d-flex justify-content-center">
-          <img src="{% static 'img/macetero.webp' %}" class="img-principal img-fluid px-2 px-md-5 mb-4">
-        </a>
-        <p>Macetas</p>
+
+      <div class="col-9 col-md-9 p-4">
+        <div class="row productos">
+            <div class="col-12 col-md-4 my-5 d-flex justify-content-center align-items-center flex-column">
+                <img src="{% static 'img/ramo-de-gladiolos-1.png' %}" class="img-fluid px-2 px-md-5 mb-4">
+              <p class="text-center">{{producto.0.nombreProducto}}<br>
+                ${{producto.0.precioProducto}} <br>
+                <span>Unidades:</span> {{producto.0.stockProducto}}
+              </p>
+              <a href="{% url 'agregarProducto' producto.0.idProducto %}" class="btn btn-primary">Agregar al carro</a>
+            </div>
+            <div class="col-12 col-md-4 mb-5 d-flex justify-content-end align-items-center flex-column">
+                <img src="{% static 'img/ramo-de-18-rosas-en-arpillers.png' %}" class="img-fluid px-2 px-md-5 mb-4">
+              <p class="text-center">{{producto.1.nombreProducto}}<br>
+                ${{producto.1.precioProducto}} <br>
+                <span>Unidades:</span> {{producto.1.stockProducto}}
+              </p>
+              <a href="{% url 'agregarProducto' producto.1.idProducto %}" class="btn btn-primary">Agregar al carro</a>
+            </div>
+            <div class="col-12 col-md-4 mb-5 d-flex justify-content-end align-items-center flex-column">
+                <img src="{% static 'img/RAMO-DE-10-GIRSAOLES-Y-GYPSUPHILIA.png' %}" class="img-fluid px-2 px-md-5 mb-4">
+              <p class="text-center">{{producto.2.nombreProducto}}<br>
+                ${{producto.2.precioProducto}} <br>
+                <span>Unidades:</span> {{producto.2.stockProducto}}
+              </p>
+              <a href="{% url 'agregarProducto' producto.2.idProducto %}" class="btn btn-primary">Agregar al carro</a>
+            </div>
+        </div>
+        <div class="row productos">
+          <div id="productos" class="col-12 col-md-4 my-5 d-flex justify-content-center align-items-center flex-column">
+            <img src="{% static 'img/Calathea_Mokoyana.webp' %}" class="img-fluid px-2 px-md-5 mb-4">
+            <p class="text-center">{{producto.3.nombreProducto}}<br>
+              ${{producto.3.precioProducto}} <br>
+              <span>Unidades:</span> {{producto.3.stockProducto}}
+            </p>
+            <a href="{% url 'agregarProducto' producto.3.idProducto %}" class="btn btn-primary">Agregar al carro</a>
+          </div>
+          <div id="productos" class="col-12 col-md-4 mb-5 d-flex justify-content-end align-items-center flex-column">
+            <img src="{% static 'img/Gomero_Shiveriana.webp' %}" class="img-fluid px-2 px-md-5 mb-4">
+            <p class="text-center">{{producto.4.nombreProducto}}<br>
+              ${{producto.4.precioProducto}} <br>
+              <span>Unidades:</span> {{producto.4.stockProducto}}
+            </p>
+            <a href="{% url 'agregarProducto' producto.4.idProducto %}" class="btn btn-primary">Agregar al carro</a>
+          </div>
+          <div id="productos" class="col-12 col-md-4 mb-5 d-flex justify-content-end align-items-center flex-column">
+            <img src="{% static 'img/Pata-de-Jaiba.webp' %}" class="img-fluid px-2 px-md-5 mb-4">
+            <p class="text-center">{{producto.5.nombreProducto}}<br>
+              ${{producto.5.precioProducto}} <br>
+              <span>Unidades:</span> {{producto.5.stockProducto}}
+            </p>
+            <a href="{% url 'agregarProducto' producto.5.idProducto %}" class="btn btn-primary">Agregar al carro</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </main>
-
 <!--Pie de pagina-->
 <footer>
   <div class="container-fluid d-flex justify-content-center " style="background-color: #DCEDC8;">
@@ -102,7 +212,7 @@
     </div>
   </div>
 </footer>
-  <script src="{% static 'js/login.js' %}"></script>
+  <script src="{% static 'js/carro.js' %}"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </body>
 </html>

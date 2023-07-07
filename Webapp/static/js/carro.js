@@ -1,34 +1,37 @@
-let carroItems = []; // Array para almacenar los productos del carrito
+let carroItems = [];
 
-function addToCart(productName, price) {
-  // Verificar si el producto ya está en el carrito
-  const existingItem = carroItems.find(item => item.name === productName);
+// Al cargar la página, intenta recuperar los datos del carrito almacenados en localStorage
+document.addEventListener('DOMContentLoaded', () => {
+  const storedItems = localStorage.getItem('carroItems');
+  if (storedItems) {
+    carroItems = JSON.parse(storedItems);
+    updateCartUI();
+  }
+});
+
+function addToCart(idProducto, price, nombre) {
+  const existingItem = carroItems.find(item => item.id === idProducto);
 
   if (existingItem) {
-    // Si el producto ya está en el carrito, solo se actualiza la cantidad y el total
     existingItem.quantity += 1;
     existingItem.total += price;
   } else {
-    // Si el producto no está en el carrito, se agrega como un nuevo elemento
-    carroItems.push({ name: productName, price: price, quantity: 1, total: price });
+    carroItems.push({ id: idProducto, price: price, quantity: 1, total: price, nombre: nombre });
   }
 
-  // Actualizar la interfaz de usuario
   updateCartUI();
+  saveCartData();
 }
 
-function removeFromCart(productName) {
-  // Buscar el producto en el carrito
-  const itemIndex = carroItems.findIndex(item => item.name === productName);
+function removeFromCart(idProducto) {
+  const itemIndex = carroItems.findIndex(item => item.id === idProducto);
 
   if (itemIndex !== -1) {
-    // Si se encuentra el producto, se elimina del carrito
     const removedItem = carroItems.splice(itemIndex, 1)[0];
 
-    // Actualizar la interfaz de usuario
     updateCartUI();
+    saveCartData();
 
-    // Realizar cualquier otra acción necesaria al eliminar el producto
     console.log('Producto eliminado:', removedItem);
   }
 }
@@ -37,24 +40,29 @@ function updateCartUI() {
   const cartItemsElement = document.getElementById('carro-items');
   const cartTotalElement = document.getElementById('carro-total');
 
-  // Limpiar la lista de elementos del carrito
   cartItemsElement.innerHTML = '';
 
-  // Recorrer los productos del carrito y agregarlos a la lista
   carroItems.forEach(item => {
     const listItem = document.createElement('li');
-    listItem.textContent = `${item.name} (x${item.quantity}) - $${item.total}`;
+    listItem.setAttribute('data-idproducto', item.id);
+    listItem.setAttribute('data-cantidad', item.quantity);
+    listItem.setAttribute('data-total', item.total);
 
-    // Agregar un botón para eliminar el producto
+    listItem.textContent = `${item.nombre} (x${item.quantity}) - $${item.total}`;
+
     const removeButton = document.createElement('button');
     removeButton.textContent = 'Eliminar';
-    removeButton.addEventListener('click', () => removeFromCart(item.name));
+    removeButton.addEventListener('click', () => removeFromCart(item.id));
 
     listItem.appendChild(removeButton);
     cartItemsElement.appendChild(listItem);
   });
 
-  // Calcular el total del carrito
   const cartTotal = carroItems.reduce((total, item) => total + item.total, 0);
   cartTotalElement.textContent = '$' + cartTotal;
+}
+
+// Guarda los datos del carrito en localStorage
+function saveCartData() {
+  localStorage.setItem('carroItems', JSON.stringify(carroItems));
 }

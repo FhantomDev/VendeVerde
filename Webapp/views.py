@@ -1,22 +1,25 @@
 from django.shortcuts import render, redirect
-from .models import cliente, tipoUsuario, comuna, empleado, pedido, detallePedido, suscripcion
+from .models import cliente, tipoUsuario, comuna, empleado, pedido, detallePedido, suscripcion, producto, despacho, estado_despacho
+from .carro import Carrito
+from datetime import datetime, timedelta
 from django.db import IntegrityError
+from django.db.models import F
 
 # Create your views here.
 
 
 def index(request):
+    carrito = Carrito(request)
+    total = carrito.obtener_total()
+
+    run = request.session.get('runCliente')
+    sus = suscripcion.objects.filter(runSuscriptor=run)
+
     context = {
-        
+        "total": total,
+        "suscripcion": sus,
     }
     return render(request, "pages/index.html", context)
-
-
-def productos(request):
-    context = {
-
-    }
-    return render(request, "pages/productos.html", context)
 
 
 def contacto(request):
@@ -35,8 +38,9 @@ def nosotros(request):
 
 def registro(request):
     if request.method != "POST":
+        com = comuna.objects.all()
         context = {
-
+            "comuna": com,
         }
         return render(request, "pages/registro.html", context)
     else:
@@ -152,34 +156,28 @@ def updateCliente(request):
         return render(request, "pages/exito.html", context)
 
 
-def plantas(request):
+def productos(request):
+    pro = producto.objects.all()
+    carrito = Carrito(request)
+    total = carrito.obtener_total()
     context = {
-
+        "producto": pro,
+        "total": total,
     }
-    return render(request, "pages/plantas.html", context)
-
-
-def macetas(request):
-    context = {
-
-    }
-    return render(request, "pages/macetas.html", context)
-
-
-def flores(request):
-    context = {
-
-    }
-    return render(request, "pages/flores.html", context)
+    return render(request, "pages/productos.html", context)
 
 
 def usuario(request):
     run = request.session.get('runCliente')
     cli = cliente.objects.get(runCliente=run)
     ped = pedido.objects.filter(cliente=cli)
+    des = despacho.objects.filter(pedido__in=ped)
+    com = comuna.objects.all()
     context = {
         "cliente": cli,
-        "pedido": ped
+        "pedido": ped,
+        "despacho": des,
+        "comuna": com,
     }
     return render(request, "pages/usuario.html", context)
 
@@ -188,11 +186,30 @@ def admin(request):
     run = request.session.get('runEmpleado')
     emp = empleado.objects.get(runEmpleado=run)
     cli = cliente.objects.all()
+    ped = pedido.objects.all()
+    des = despacho.objects.all()
+
     context = {
         "empleado": emp,
-        "cliente": cli
+        "cliente": cli,
+        "pedido": ped,
+        "despacho": des,
     }
     return render(request, "pages/admin.html", context)
+
+
+def cambiarEstado(request):
+    if request.method == "POST":
+        idDes = request.POST["idDespacho"]
+        estado = request.POST["estadoDespacho"]
+
+        objDespacho = despacho.objects.get(idDespacho=idDes)
+        objEstado = estado_despacho.objects.get(idEstado=estado)
+
+        objDespacho.estado = objEstado
+        objDespacho.save()
+
+        return redirect("admin")
 
 
 def exito(request):
@@ -248,6 +265,91 @@ def suscripcionCliente(request):
         )
         objSus.save()
     context = {
-
+        "mensaje": "Susripción exitosa"
     }
     return render(request, "pages/exito.html", context)
+
+
+def comprar(request):
+    if request.method == "POST":
+        run = request.session.get('runCliente')
+        cli = cliente.objects.get(runCliente=run)
+
+        #idPed = request.POST["idPedido"]
+        #cantidadPed = request.POST["cantidadPedido"]
+        totalPed = request.POST["totalPedido"]
+        fechaPed = datetime.now()
+
+
+        objPedido = pedido.objects.create(
+            fechaPedido = fechaPed,
+            descuentoPedido = 0,
+            totalPedido = totalPed,
+            cliente = cli,
+        )
+        objPedido.save()
+
+        fechaDespacho = fechaPed + timedelta(days=1)
+        fechaEntrega = fechaPed + timedelta(days=2)
+        est=1
+        objEstado = estado_despacho.objects.get(idEstado=est)
+ 
+        objDespacho = despacho.objects.create(
+            fechaDespacho=fechaDespacho,
+            fechaEntrega=fechaEntrega,
+            pedido=objPedido,
+            estado=objEstado,
+        )
+        objDespacho.save()
+
+        carrito = request.session.get('carrito', {})
+        for producto_id, value in carrito.items():
+            pro = producto.objects.get(idProducto=producto_id)
+            cantidad = value['cantidad']
+            subTotal = value['acumulado']
+
+            # Crear el objeto detalle_pedido
+            objDetallePedido = detallePedido.objects.create(
+                pedido=objPedido,
+                producto=pro,
+                cantidadProducto=cantidad,
+                subtotalPedido=subTotal,
+            )
+            objDetallePedido.save()
+            producto.objects.filter(idProducto=producto_id).update(stockProducto=F('stockProducto') - cantidad)
+
+
+        limpiarCarrito(request)
+
+    context = {
+            "mensaje": "Compra exitosa"
+    }
+    return render(request, "pages/exito.html", context)
+
+
+def agregarProducto(request, producto_id):
+    carrito = Carrito(request)
+    pro = producto.objects.get(idProducto=producto_id)
+    carrito.agregar(pro)
+    return redirect("productos")
+
+def eliminarProducto(request, producto_id):
+    carrito = Carrito(request)
+    pro = producto.objects.get(idProducto=producto_id)
+    carrito.eliminar(pro)
+    return redirect("productos")
+
+def restarProducto(request, producto_id):
+    carrito = Carrito(request)
+    pro = producto.objects.get(idProducto=producto_id)
+    carrito.restar(pro)
+    return redirect("productos")
+
+def limpiarCarrito(request):
+    carrito = Carrito(request)
+    carrito.limpiar()
+    return redirect("productos")
+
+
+def carro(request):
+    return render(request, "pages/carro.html")

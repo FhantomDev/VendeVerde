@@ -48,6 +48,8 @@
           <div class="col-12 col-md-12 nav nav-tabs bg-info" id="nav-tab" role="tablist">
             <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Cuenta</button>
             <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Ver usuarios</button>
+            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-pedidos" type="button" role="tab" aria-controls="nav-pedidos" aria-selected="false">Ver pedidos</button>
+            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-despachos" type="button" role="tab" aria-controls="nav-despachos" aria-selected="false">Estado despachos</button>
           </div>
         </nav>
         {% if empleado %}
@@ -89,8 +91,62 @@
               </tbody>
             </table>
           </div>
-          <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+          <div class="tab-pane fade" id="nav-pedidos" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
             <h2>Pedidos</h2>
+            <table class="table table-light table-striped mt-3">
+              <thead>
+                <th>Cliente</th>
+                <th>Fecha</th>
+                <th>Total</th>
+              </thead>
+              <tbody>
+                {% for ped in pedido %}
+                <tr>
+                  <td>{{ped.cliente}}</td>
+                  <td>{{ped.fechaPedido}}</td>
+                  <td>${{ped.totalPedido}}</td>
+                </tr> 
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div class="tab-pane fade" id="nav-despachos" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+            <h2>Despachos</h2>
+            <table class="table table-light table-striped mt-3">
+              <thead>
+                <th>ID despacho</th>
+                <th>Fecha envio</th>
+                <th>Fecha entrega</th>
+                <th>Estado</th>
+                <th>Cambiar estado</th>
+                <th></th>
+              </thead>
+              <tbody>
+                {% for des in despacho %}
+                <tr>
+                  <form action="cambiarEstado" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="idDespacho" value="{{ des.idDespacho }}">
+                  <td>{{des.idDespacho}}</td>
+                  <td>{{des.fechaDespacho}}</td>
+                  <td>{{des.fechaEntrega}}</td>
+                  <td>{{des.estado}}</td>
+                  <td>
+                    <select class="form-select w-50" name="estadoDespacho" id="estadoDespacho">
+                      <option value="" disable>Seleccione una opción</option>
+                      <option value="1" name="1">En preparación</option>
+                      <option value="2" name="2">Enviado</option>
+                      <option value="3" name="3">Entregado</option>
+                    </select>
+                  </td>
+                  <td>
+                    <button class="btn btn-primary">Cambiar</button>
+                  </td>
+                </form>
+                </tr> 
+                {% endfor %}
+              </tbody>
+            </table>
           </div>
           <div class="tab-pane fade" id="nav-disabled" role="tabpanel" aria-labelledby="nav-disabled-tab" tabindex="0">...</div>
         </div>
