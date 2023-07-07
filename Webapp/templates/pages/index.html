@@ -72,19 +72,8 @@
             <a class="btn btn-danger" href="{% url 'salir' %}">Cerrar sesión</a>
           </div>
           <hr>
-          <div>
-            <table>
-              <thead>
-                  <tr>
-                      <th scope="row" colspan="3" class="text-center">Carro <i class="bi bi-cart4"></i></th>
-                  </tr>
-                  <tr>
-                    <th>Producto</th>
-                    <th>Cantidad</th>
-                    <th>Precio</th>
-                    <th>Quitar</th>
-                  </tr>
-              </thead>
+          <div class="">
+            <p class="text-center">Carro <i class="bi bi-cart4"></i></p>
               <form action="comprar" method="POST">
                 {% csrf_token %}
                 {% if request.session.carrito.items %}
@@ -107,12 +96,11 @@
                   </tr>
                 {% endif %}
                 <tr>
-                  <th scope="row">Total:</th>
+                  <th>Total:</th>
                   <td><input type="hidden" name="totalPedido" value="{{ total }}">{{ total }}</td>
                   <td><button type="submit" class="btn btn-primary">Comprar</button></td>
                 </tr>    
               </form>
-          </table>
           </div>      
           
           {% elif request.session.runEmpleado%}
