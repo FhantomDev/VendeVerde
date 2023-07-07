@@ -13,13 +13,18 @@ def index(request):
     total = carrito.obtener_total()
 
     run = request.session.get('runCliente')
-    sus = suscripcion.objects.filter(runSuscriptor=run)
+    
+    try:
+        sus = suscripcion.objects.get(runSuscriptor=run)
+    except suscripcion.DoesNotExist:
+        sus = None
 
     context = {
         "total": total,
         "suscripcion": sus,
     }
     return render(request, "pages/index.html", context)
+
 
 
 def contacto(request):
@@ -255,6 +260,20 @@ def eliminarCliente(request, pk):
         return render(request, "pages/error.html", context)
     
 
+def eliminarSuscripcion(request, pk):
+    context = {}
+    try:
+        sus = suscripcion.objects.get(runSuscriptor=pk)
+        sus.delete()
+        context = {
+            "mensaje": "Suscripción eliminada",
+        }
+        return render(request, "pages/exito.html", context)
+    except:
+        context = {"mensaje": "Error",}
+        return render(request, "pages/error.html", context)
+    
+
 def suscripcionCliente(request):
     if request.method == "POST":
         run = request.session.get('runCliente')
@@ -275,17 +294,20 @@ def comprar(request):
         run = request.session.get('runCliente')
         cli = cliente.objects.get(runCliente=run)
 
-        #idPed = request.POST["idPedido"]
-        #cantidadPed = request.POST["cantidadPedido"]
         totalPed = request.POST["totalPedido"]
         fechaPed = datetime.now()
 
+        if suscripcion.objects.filter(runSuscriptor=run).exists():
+            descuentoPed = float(totalPed) * 0.05
+            totalPed = float(totalPed) - descuentoPed
+        else:
+            descuentoPed = 0
 
         objPedido = pedido.objects.create(
-            fechaPedido = fechaPed,
-            descuentoPedido = 0,
-            totalPedido = totalPed,
-            cliente = cli,
+            fechaPedido=fechaPed,
+            descuentoPedido=descuentoPed,
+            totalPedido=totalPed,
+            cliente=cli,
         )
         objPedido.save()
 
@@ -308,7 +330,6 @@ def comprar(request):
             cantidad = value['cantidad']
             subTotal = value['acumulado']
 
-            # Crear el objeto detalle_pedido
             objDetallePedido = detallePedido.objects.create(
                 pedido=objPedido,
                 producto=pro,

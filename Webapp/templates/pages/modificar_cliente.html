@@ -44,32 +44,8 @@
 <main>
   <div class="container-fluid">
     <div class="row d-flex justify-content-center">
-        <nav class="bg-info p-5">
-          <div class="col-12 col-md-12 nav nav-tabs bg-info" id="nav-tab" role="tablist">
-            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Cuenta</button>
-            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Editar Perfil</button>
-            <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Pedidos</button>
-          </div>
-        </nav>
-        {% if cliente %}
-        {% endif %}
-        {% if pedido %}
-        {% endif %}
-        <div class="col-12 col-md-12 bg-info-subtle p-5 tab-content" id="nav-tabContent">
-          <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
-            <div class="panel-control">
-              <h2>Hola {{cliente.nombreCliente}} {{cliente.apPaternoCliente}} {{cliente.apMaternoCliente}} </h2>
-              <br>
-              <h3>Tu información</h3>
-                <p>Email: {{cliente.correoCliente}}</p>
-                <p>Dirección: {{cliente.direccionCliente}}</p>
-                <p>Comuna: {{cliente.comuna}}</p>
-                <p>Telefono: {{cliente.telefonoCliente}}</p>
-            </div>
-          </div>
-          <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
-            <h2>Editar perfil</h2>
-            <form novalidate action="updateCliente" method="POST" name="update" id="form-registro" class="row w-50 py-5">
+            <h2>Modificar cliente</h2>
+            <form novalidate action="cambiarCliente" method="POST" id="form-registro" class="row w-50 py-5">
               {% csrf_token %}
               <div class="col-12 col-md-6 mb-4">
                 <label for="rut" class="form-label">Rut</label>
@@ -117,38 +93,10 @@
               </div>
               <div class="col-12 d-flex justify-content-center align-items-center" name="alerta" id="alerta"></div>
               <div class="col-12 d-flex justify-content-center py-3">
-                <button type="submit" class="btn btn-primary" id="btnRegistro">Actualizar</button>
+                <button type="submit" class="btn btn-primary" id="btnRegistro">Modificar</button>
               </div>
             </form>
           </div>
-          <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
-            <h2>Pedidos</h2>
-            <table class="table table-light table-striped mt-3">
-              <thead>
-                <th>ID pedido</th>
-                <th>Fecha</th>
-                <th>Descuento por suscripción</th>
-                <th>Total pedido</th>
-                <th>Estado</th>
-              </thead>
-              <tbody>
-                {% for ped in pedido %}
-                {% for des in despacho %}
-                  {% if ped.idPedido == des.pedido.idPedido %}
-                    <tr>
-                      <td>{{ ped.idPedido }}</td>
-                      <td>{{ ped.fechaPedido }}</td>
-                      <td>${{ ped.descuentoPedido }}</td>
-                      <td>${{ ped.totalPedido }}</td>
-                      <td>{{ des.estado }}</td>
-                    </tr>
-                  {% endif %}
-                {% endfor %}
-              {% endfor %}              
-              </tbody>
-            </table>
-          </div>
-          <div class="tab-pane fade" id="nav-disabled" role="tabpanel" aria-labelledby="nav-disabled-tab" tabindex="0">...</div>
         </div>
     </div>
   </div>

@@ -73,7 +73,6 @@
                 <th>Apellido paterno</th>
                 <th>Apellido materno</th>
                 <th>Correo</th>
-                <th>Modificar</th>
                 <th>Eliminar</th>
               </thead>
               <tbody>
@@ -84,7 +83,6 @@
                   <td>{{cli.apPaternoCliente}}</td>
                   <td>{{cli.apMaternoCliente}}</td>
                   <td>{{cli.correoCliente}}</td>
-                  <td>boton</td>
                   <td><a href="{% url 'eliminarCliente' pk=cli.runCliente%}">Eliminar</a></td>
                 </tr> 
                 {% endfor %}

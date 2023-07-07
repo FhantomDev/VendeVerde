@@ -138,6 +138,7 @@
           {% if suscripcion %}
           <div class="text-center p-3 bg-warning w-75 mx-auto">
             Suscripción activa: ¡Estás suscrito!
+            <a href="{% url 'eliminarSuscripcion' pk=suscripcion.runSuscriptor%}">Eliminar</a>
           </div>
           {% else %}
           <div class="text-center p-3 bg-warning w-75 mx-auto">
